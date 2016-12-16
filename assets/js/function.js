@@ -25,6 +25,7 @@ var myModule = (function() {
 		//-----------------------
 		_showMenu();
 		_actionHamburger();
+		_preloader();
 	};
 	//-------------------------------------------------------------------
 
@@ -42,6 +43,17 @@ var myModule = (function() {
 			$navigation.removeClass('is-move');
 			$hamburger.removeClass('is-active');
 		});
+
+		// $('.js-hamburger-section').on('mouseover', function() {
+		// 	if(!($content.hasClass('is-move')))
+		// 			$hamburger.addClass('is-hide');
+				
+		// 	// $hamburger.removeClass('is-hide');
+		// });
+
+		// $('.js-hamburger-section').on('mouseout', function() {
+		// 	$hamburger.addClass('is-hide');
+		// });
 	}
   //-------------------------------------------------------------------
 
@@ -56,7 +68,10 @@ var myModule = (function() {
 
 			if ( wScroll > i ) {
 				i = wScroll;
-				$hamburger.addClass('is-hide');
+
+				if(!($content.hasClass('is-move')))
+					$hamburger.addClass('is-hide');
+		
 			} else if ( wScroll < i ){
 				i = wScroll;
 				$hamburger.removeClass('is-hide');
@@ -67,7 +82,17 @@ var myModule = (function() {
 	}
   //-------------------------------------------------------------------
 
-	
+	// Preloader
+  //-------------------------------------------------------------------
+	function _preloader() {
+		var $preloader = $('.js-preloader');
+
+		$window.on('load', function() {
+			$preloader.fadeOut();
+		});
+		
+	}
+  //-------------------------------------------------------------------
 
 
 
