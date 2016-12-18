@@ -1794,8 +1794,6 @@ p {
 */
 .about {
   margin-bottom: 120px; }
-  .about p:last-of-type {
-    margin-bottom: 70px; }
 
 .about-title {
   margin-bottom: 25px; }
