@@ -204,8 +204,7 @@ blockquote {
   padding-left: 15px;
   padding-right: 15px; }
   .container.container--thin {
-    max-width: 830px;
-    margin-bottom: 120px; }
+    max-width: 830px; }
 
 .flex-row {
   display: -webkit-box;
@@ -837,13 +836,12 @@ p {
 		POST AND PROJECT NAVIGATION
 	-------------------------------------------
 */
-.page-nav {
-  position: fixed;
+.i-post-navigation {
+  position: absolute;
   top: auto;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 5;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -908,6 +906,91 @@ p {
   color: #888888;
   -webkit-transition: color 100ms ease-in;
           transition: color 100ms ease-in; }
+
+@media (max-width: 768px) {
+  .i-post-navigation {
+    padding-left: 15px;
+    padding-right: 15px; }
+  .back span {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px); }
+  .back .arrow--mod {
+    opacity: 1; } }
+
+/* 
+	-----------------------------------------------
+		SKILLS BAR
+	-----------------------------------------------
+*/
+.skills-bar-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.skills-bar-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 660px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 55px; }
+  .skills-bar-list li {
+    margin-bottom: 12px; }
+
+.skills-bar-title {
+  margin-bottom: 5px;
+  font-size: 1.0625rem; }
+
+.skills-bar {
+  width: 280px;
+  height: 8px;
+  background-color: #e6e6e6;
+  position: relative;
+  overflow: hidden; }
+
+.skills-inner-bar {
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e85a71; }
+
+@media (max-width: 1024px) {
+  .skills-bar-list {
+    margin: 0 auto 70px; } }
+
+@media (max-width: 768px) {
+  .skills-bar-wrap {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+  .skills-bar-list {
+    max-width: 400px;
+    display: block;
+    margin-bottom: 55px; }
+  .skills-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e6e6e6;
+    position: relative; } }
+
+@media (max-width: 480px) {
+  .skills-bar-list {
+    max-width: 100%; } }
 
 /* 
 	-----------------------------------------------
@@ -1235,43 +1318,6 @@ p {
   .m-about-text p:first-child {
     margin-bottom: 20px; }
 
-.m-about-skills {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  max-width: 660px;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin-bottom: 70px; }
-  .m-about-skills li {
-    margin-bottom: 12px; }
-
-.skills-bar-title {
-  margin-bottom: 5px;
-  font-size: 1.0625rem; }
-
-.skills-bar {
-  width: 280px;
-  height: 8px;
-  background-color: #e6e6e6;
-  position: relative; }
-
-.skills-inner-bar {
-  width: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #e85a71; }
-
 .m-about-btn-wrap {
   text-align: center; }
 
@@ -1286,9 +1332,7 @@ p {
     width: 100%;
     padding: 0; }
   .m-about-name {
-    text-align: left; }
-  .m-about-skills {
-    margin: 0 auto 70px; } }
+    text-align: left; } }
 
 @media (max-width: 768px) {
   .m-about-row--m-bottom {
@@ -1304,20 +1348,7 @@ p {
     padding-right: 0px;
     text-align: left; }
   .m-about-btn-wrap {
-    text-align: center; }
-  .m-about-skills {
-    max-width: 400px;
-    display: block;
-    margin-bottom: 55px; }
-  .skills-bar {
-    width: 100%;
-    height: 8px;
-    background-color: #e6e6e6;
-    position: relative; } }
-
-@media (max-width: 480px) {
-  .m-about-skills {
-    max-width: 100%; } }
+    text-align: center; } }
 
 /* 
 	-----------------------------------------------
@@ -1672,11 +1703,10 @@ p {
 		POSTS PAGE
 	-----------------------------------------------
 */
-.posts article:last-of-type {
-  margin-bottom: 0; }
-
-.post {
-  margin-bottom: 90px; }
+.posts {
+  margin-bottom: 120px; }
+  .posts article {
+    margin-bottom: 80px; }
 
 .post-title {
   margin-bottom: 5px; }
@@ -1702,10 +1732,8 @@ p {
   text-align: right; }
 
 @media (max-width: 768px) {
-  .container--posts article:last-child {
-    margin-bottom: 120px; }
-  .post {
-    margin-bottom: 60px; }
+  .posts {
+    margin-bottom: 80px; }
   .post-title {
     margin-bottom: 10px; }
     .post-title a {
@@ -1721,8 +1749,9 @@ p {
 	-----------------------------------------------
 */
 .article {
-  padding-top: 100px;
-  margin-bottom: 150px; }
+  position: relative;
+  padding-bottom: 100px;
+  padding-top: 100px; }
   .article h1 {
     margin-bottom: 10px; }
 
@@ -1756,18 +1785,20 @@ p {
 
 @media (max-width: 768px) {
   .article {
-    margin-bottom: 90px; } }
+    padding-bottom: 60px; } }
 
 /* 
 	-----------------------------------------------
 		ABOUT PAGE
 	-----------------------------------------------
 */
-.about p:last-of-type {
-  margin-bottom: 70px; }
+.about {
+  margin-bottom: 120px; }
+  .about p:last-of-type {
+    margin-bottom: 70px; }
 
 .about-title {
-  margin-bottom: 70px; }
+  margin-bottom: 25px; }
 
 .about-skills-wrap {
   display: -webkit-box;
@@ -1782,8 +1813,8 @@ p {
 .skill {
   width: 50%;
   margin-bottom: 40px;
-  padding-left: 40px;
-  padding-right: 40px; }
+  padding-left: 30px;
+  padding-right: 30px; }
   .skill .title {
     font-size: 1.375rem;
     font-weight: 600;
@@ -1828,6 +1859,9 @@ p {
 */
 .container--project {
   margin-bottom: 120px; }
+
+.project {
+  padding-bottom: 100px; }
 
 .projects-title {
   margin-bottom: 60px;
@@ -1890,7 +1924,9 @@ p {
 
 @media (max-width: 768px) {
   .container--project {
-    margin-bottom: 60px; }
+    margin-bottom: 80px; }
+  .project {
+    padding-bottom: 60px; }
   .project-descr {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
