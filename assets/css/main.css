@@ -1493,7 +1493,8 @@ p {
 
 @media (max-width: 768px) {
   .m-work {
-    margin-bottom: 100px; } }
+    margin-bottom: 100px;
+    padding-top: 60px; } }
 
 @media (max-width: 480px) {
   .m-work-item {
@@ -1794,6 +1795,9 @@ p {
 */
 .about {
   margin-bottom: 120px; }
+  .about a {
+    text-decoration: none;
+    color: #e85a71; }
 
 .about-title {
   margin-bottom: 25px; }
@@ -1803,7 +1807,8 @@ p {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
+      flex-wrap: wrap;
+  margin-bottom: 80px; }
   .about-skills-wrap div:nth-last-child(1),
   .about-skills-wrap div:nth-last-child(2) {
     margin-bottom: 0; }
@@ -1841,9 +1846,12 @@ p {
 @media (max-width: 1024px) {
   .about-skills-wrap {
     -ms-flex-pack: distribute;
-        justify-content: space-around; } }
+        justify-content: space-around;
+    margin-bottom: 60px; } }
 
 @media (max-width: 768px) {
+  .about {
+    margin-bottom: 80px; }
   .skill {
     max-width: 580px;
     width: 100%;
@@ -1924,7 +1932,7 @@ p {
   .container--project {
     margin-bottom: 80px; }
   .project {
-    padding-bottom: 60px; }
+    padding-bottom: 80px; }
   .project-descr {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
