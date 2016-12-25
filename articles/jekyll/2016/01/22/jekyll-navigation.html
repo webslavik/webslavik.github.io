@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta meta="meta" name="format-detection" content="telephone=no"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		<!-- <title>Jekyll и навигация между постами</title> -->
+		<title> Jekyll и навигация между постами</title>
+
+
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto:400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+		<link rel="stylesheet" href="/assets/css/main.css"/>
+
+	</head>
+	<body>
+
+		<div class="page-wrap">
+
+			
+<!-- begin preloader-->
+<div class="preloader js-preloader">
+  <div class="spinner">
+    <div class="circle"></div>
+  </div>
+</div>
+<!-- end preloader-->
+			
+<!-- begin sidebar nav -->
+<nav class="p-navigation js-navigation">
+  <ul class="p-navigation-list">
+    <li><a href="/" >Главная</a></li>
+    <li><a href="/about/" >Обо мне</a></li>
+    <li><a href="/projects/" >Работы</a></li>
+    <li><a href="/articles/" class="is-active">Статьи</a></li>
+  </ul>
+</nav>
+<!-- end sidebar nav -->
+			
+<!-- begin hamburger-->
+<div class="p-hamburger">
+  <div class="hamburger hamburger--collapse-r js-hamburger">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+  </div>
+</div>
+<!-- end hamburger-->
+
+			<article class="content js-content article">
+	<div class="container container--thin">
+		<h1>Jekyll и навигация между постами</h1>
+<div class="article-date-tag">
+	<span class="article-date">22.01.2016 / </span>
+	<span class="article-tag">jekyll</span>
+</div>
+
+
+<p>
+Сделать навигацию между постами в Jekyll довольно просто. Воспользуемся для этого глобальной переменной <span class="highlights">page</span> и поста <span class="highlights">previous</span> и <span class="highlights">next</span>.
+</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;nav&gt;</span>
+ <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ page.previous.url }}"</span><span class="nt">&gt;</span>Prev<span class="nt">&lt;/a&gt;</span>
+ <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ page.next.url }}"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/nav&gt;</span></code></pre></figure>
+
+<p>
+Тем не менее, пользователь, находясь на странице последнего поста, будет видеть возможность перейти к следующему, которого нет. Та же ситуация и с первым постом.
+<br>
+Исправить это, можно воспользовавшись <span class="highlights">if</span>:
+</p>
+
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;nav&gt;</span>
+ {% if page.previous.url %}
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ page.previous.url }}"</span><span class="nt">&gt;</span>Prev<span class="nt">&lt;/a&gt;</span>
+ {% endif %}
+ {% if page.next.url %}
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ page.next.url }}"</span><span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+ {% endif %}
+<span class="nt">&lt;/nav&gt;</span></code></pre></figure>
+
+<p>То есть, если  <span class="highlights">previous</span> или  <span class="highlights">next</span> возвращают  <span class="highlights">nil</span>, то ссылка находящаяся между  <span class="highlights">if</span> не отобразится. 
+</p>
+
+<p>Я использую посты не только для статей, но и для вывода работ. Структура папки <span class="highlights">_post</span> выглядит таким образом:
+</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">| _post/
+  /-- articles/
+  /-- projects/</code></pre></figure>
+
+<p>Но применяя этот способ, столкнулся с проблемой, когда мы переходим со статей в работы и обратно. Это необходимо устранить.
+<br>
+Код, приведенный ниже решает эту задачу:
+</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">{% if page.categories %}
+  {% assign category = page.categories[0] %}
+  {% assign posts = site.categories[category] %}
+  {% for post in posts %}
+    {% if post.url == page.url %}
+      {% assign post_index0 = forloop.index0 %}
+      {% assign post_index1 = forloop.index %}
+    {% endif %}
+  {% endfor %}
+  {% for post in posts %}
+    {% if post_index0 == forloop.index %}
+      {% assign next_post = post %}
+    {% endif %}
+    {% if post_index1 == forloop.index0 %}
+      {% assign prev_post = post %}
+    {% endif %}
+  {% endfor %}
+{% endif %}</code></pre></figure>
+
+
+<p>Попробуем разобраться что к чему.</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">{% if page.categories %}
+ {% assign category = page.categories[0] %}
+ {% assign posts = site.categories[category] %}
+ <span class="c">&lt;!-- остальной код --&gt;</span>
+{% endif %}</code></pre></figure>
+
+<p>Если пост имеет категории, тогда создаем две переменные. В первую помещаем необходимую нам категорию, а во вторую все посты связанные с ней.</p>
+
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- остальной код --&gt;</span>
+{% for post in posts %}
+ {% if post.url == page.url %}
+  {% assign post_index0 = forloop.index0 %}
+  {% assign post_index1 = forloop.index %}
+ {% endif %}
+{% endfor %}
+ <span class="c">&lt;!-- остальной код --&gt;</span></code></pre></figure>
+
+<p>При совпадении <span class="highlights">url</span> страницы и поста, помещаем индексы итерации в <span class="highlights">post_index0</span> и <span class="highlights">post_index</span>.</p>
+
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- остальной код --&gt;</span>
+{% for post in posts %}
+ {% if post_index0 == forloop.index %}
+  {% assign next_post = post %}
+ {% endif %}
+ {% if post_index1 == forloop.index0 %}
+  {% assign prev_post = post %}
+ {% endif %}
+{% endfor %}
+ <span class="c">&lt;!-- остальной код --&gt;</span></code></pre></figure>
+
+<p>Снова воспользовавшись <span class="highlights">for</span> перебираем посты, узная, естли следующий пост и предыдущий.</p>
+
+	</div>
+	
+	
+<!-- begin inner page navigation-->
+<div class="i-post-navigation"><a href="/articles" class="back">
+    <svg class="icon icon-arrow arrow--mod">
+      <use xlink:href="/assets/img/svg-sprite.svg#arrow"></use>
+    </svg><span>Все статьи</span></a>
+
+  <div class="nav-arrows">
+  	
+	  
+	  	<a href="/articles/2014/04/20/blabla-post.html" title="prev"> 
+	      <svg class="icon icon-arrow-left arrow-left--mod">
+	        <use xlink:href="/assets/img/svg-sprite.svg#arrow-left"></use>
+	      </svg></a>
+	  
+    
+  </div>
+</div>
+<!-- end inner page navigation-->
+</article>
+
+
+				
+		</div>
+				
+
+
+		<script src="/assets/js/vendor.js"></script>
+		<script src="/assets/js/function.js"></script>
+
+	</body>
+</html>
