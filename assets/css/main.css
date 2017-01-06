@@ -392,6 +392,9 @@ p {
   letter-spacing: 4.5px;
   font-weight: 900; }
 
+.bold {
+  font-weight: 700; }
+
 .highlights {
   color: #4285C2; }
 
@@ -1759,7 +1762,8 @@ p {
   position: relative;
   padding-bottom: 100px;
   padding-top: 100px; }
-  .article h1 {
+  .article h1,
+  .article h2 {
     margin-bottom: 10px; }
 
 .article-date-tag {

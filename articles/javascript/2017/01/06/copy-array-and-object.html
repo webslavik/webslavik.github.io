@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta meta="meta" name="format-detection" content="telephone=no"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		<!-- <title>Копирование массивов и объектов в JavaScript</title> -->
+		<title> Копирование массивов и объектов в JavaScript</title>
+
+
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto:400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+		<link rel="stylesheet" href="/assets/css/main.css"/>
+
+	</head>
+	<body>
+
+		<div class="page-wrap">
+
+			
+<!-- begin preloader-->
+<div class="preloader js-preloader">
+  <div class="spinner">
+    <div class="circle"></div>
+  </div>
+</div>
+<!-- end preloader-->
+			
+<!-- begin sidebar nav -->
+<nav class="p-navigation js-navigation">
+  <ul class="p-navigation-list">
+    <li><a href="/" >Главная</a></li>
+    <li><a href="/about/" >Обо мне</a></li>
+    <li><a href="/projects/" >Работы</a></li>
+    <li><a href="/articles/" class="is-active">Статьи</a></li>
+  </ul>
+</nav>
+<!-- end sidebar nav -->
+			
+<!-- begin hamburger-->
+<div class="p-hamburger">
+  <div class="hamburger hamburger--collapse-r js-hamburger">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+  </div>
+</div>
+<!-- end hamburger-->
+
+			<article class="content js-content article">
+	<div class="container container--thin">
+		<h1>Копирование массивов и объектов в JavaScript</h1>
+<div class="article-date-tag">
+	<span class="article-date">06.01.2017 / </span>
+	<span class="article-tag">#javascript</span>
+</div>
+
+
+<h2>Массивы</h2>
+
+<p>Для начала создадим простой массив:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">heros</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Superman'</span><span class="p">,</span> <span class="s1">'Batman'</span><span class="p">,</span> <span class="s1">'Wonder Woman'</span><span class="p">];</span></code></pre></figure>
+
+
+<p><span class="bold">Вариант №1.</span> Воспользуемся методом <span class="highlights">.slice()</span>. Мы знаем что он принимает два аргумента - <span class="highlights">.slice(begin, end)</span>. Но если мы пропустим этот шаг и ничего не передадим, то возвратится полная копия массива.
+</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">copyHeros</span> <span class="o">=</span> <span class="nx">heros</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copyHeros</span><span class="p">)</span> <span class="c1">// ['Superman', 'Batman', 'Wonder Woman']</span></code></pre></figure>
+
+<p><span class="bold">Вариант №2.</span> Теперь нам поможет <span class="highlights">.concat()</span>. Вызываем его на пустом массиве и передаем в аргумент <span class="highlights">heros</span>.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">copyHeros</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">heros</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copyHeros</span><span class="p">)</span> <span class="c1">// ['Superman', 'Batman', 'Wonder Woman']</span></code></pre></figure>
+
+<p>Воспользуемся возможностями <span class="highlights">ES6</span>.</p>
+
+<p><span class="bold">Вариант №3.</span> Используем <span class="highlights">spread</span> (оператор расширения).</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">copyHeros</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">heros</span><span class="p">];</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copyHeros</span><span class="p">)</span> <span class="c1">// ['Superman', 'Batman', 'Wonder Woman']</span></code></pre></figure>
+
+<p><span class="bold">Вариант №4.</span> И напоследок применим метод <span class="highlights">.from()</span>, который необходимо вызвать на объекте <span class="highlights">Array</span>.
+</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">copyHeros</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">heros</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">copyHeros</span><span class="p">)</span> <span class="c1">// ['Superman', 'Batman', 'Wonder Woman']</span></code></pre></figure>
+
+
+
+<h2>Объекты</h2>
+
+<p>В JS с копированием объектов все чуть сложнее чем хотелось бы, т.к. нет нативного метода.</p>
+
+<p><span class="bold">Вариант №1.</span> Мы можем сами написать необходимый код. Выглядеть он будет подобным образом: </p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">makeClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">clone</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// Создаем новый пустой объект</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Перебираем все свойства копируемого объекта</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// Только собственные свойства</span>
+      <span class="k">if</span> <span class="p">(</span><span class="s2">"object"</span><span class="o">===</span><span class="k">typeof</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">])</span> <span class="c1">// Если свойство также объект</span>
+        <span class="nx">clone</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">]);</span> <span class="c1">// Делаем клон свойства</span>
+      <span class="k">else</span>
+        <span class="nx">clone</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span> <span class="c1">// Или же просто копируем значение</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+ <span class="k">return</span> <span class="nx">clone</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">makeClone</span><span class="p">(</span><span class="nx">someObj</span><span class="p">);</span></code></pre></figure>
+
+<p><span class="bold">Вариант №2.</span> <span class="highlights">JSON.parse</span> и <span class="highlights">JSON.stringify</span> тоже поможет сделать копию объекта:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">someObj</span><span class="p">));</span></code></pre></figure>
+
+
+<p><span class="bold">Вариант №3.</span> В <span class="highlights">ES6</span> у <span class="highlights">Object</span> появился метод <span class="highlights">.assign()</span>. К сожалению он не делает глубокое копирование:
+</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assing</span><span class="p">({},</span> <span class="nx">someObj</span><span class="p">);</span></code></pre></figure>
+
+<p><span class="bold">Вариант №4.</span> Можно воспользоваться сторонними библиотеками.</p>
+
+<p>В <span class="highlights">jQuery</span> есть метод <span class="highlights">jQuery.extend()</span>:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">someObj</span><span class="p">);</span></code></pre></figure>
+
+
+<p>В <span class="highlights">Lodash</span> есть <span class="highlights">.cloneDeep()</span>:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">cloneObj</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cloneDeep</span><span class="p">(</span><span class="nx">someObj</span><span class="p">);</span></code></pre></figure>
+	</div>
+	
+	
+<!-- begin inner page navigation-->
+<div class="i-post-navigation"><a href="/articles" class="back">
+    <svg class="icon icon-arrow arrow--mod">
+      <use xlink:href="/assets/img/svg-sprite.svg#arrow"></use>
+    </svg><span>Все статьи</span></a>
+
+  <div class="nav-arrows">
+  	
+	  
+	  	<a href="/articles/jekyll/2016/12/22/jekyll-navigation.html" title="prev"> 
+	      <svg class="icon icon-arrow-left arrow-left--mod">
+	        <use xlink:href="/assets/img/svg-sprite.svg#arrow-left"></use>
+	      </svg></a>
+	  
+    
+  </div>
+</div>
+<!-- end inner page navigation-->
+</article>
+
+
+				
+		</div>
+				
+
+
+		<script src="/assets/js/vendor.js"></script>
+		<script src="/assets/js/function.js"></script>
+
+	</body>
+</html>
