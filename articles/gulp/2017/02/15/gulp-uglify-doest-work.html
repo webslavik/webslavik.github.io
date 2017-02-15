@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta meta="meta" name="format-detection" content="telephone=no"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		<!-- <title>gulp-uglify не поддерживает ES6</title> -->
+		<title> gulp-uglify не поддерживает ES6</title>
+
+
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto:400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+		<link rel="stylesheet" href="/assets/css/main.css"/>
+
+	</head>
+	<body>
+
+		<div class="page-wrap">
+
+			
+<!-- begin preloader-->
+<div class="preloader js-preloader">
+  <div class="spinner">
+    <div class="circle"></div>
+  </div>
+</div>
+<!-- end preloader-->
+			
+<!-- begin sidebar nav -->
+<nav class="p-navigation js-navigation">
+  <ul class="p-navigation-list">
+    <li><a href="/" >Главная</a></li>
+    <li><a href="/about/" >Обо мне</a></li>
+    <li><a href="/projects/" >Работы</a></li>
+    <li><a href="/articles/" class="is-active">Статьи</a></li>
+  </ul>
+</nav>
+<!-- end sidebar nav -->
+			
+<!-- begin hamburger-->
+<div class="p-hamburger">
+  <div class="hamburger hamburger--collapse-r js-hamburger">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+  </div>
+</div>
+<!-- end hamburger-->
+
+			<article class="content js-content article">
+	<div class="container container--thin">
+		<h1>gulp-uglify не поддерживает ES6</h1>
+<div class="article-date-tag">
+  <span class="article-date">15.02.2017 / </span>
+  <span class="article-tag">#gulp</span>
+</div>
+
+
+<p>Как то раз, изучая AngularJS, захотелось автоматизировать процесс с помощью Gulp.<br>
+Скрипты необходимо будет собрать в один файл, затем минифицировать.
+</p>
+
+<p>Окей, для минификации отлично подойдет gulp-uglify. Установим его:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">npm</span> <span class="nx">i</span> <span class="o">--</span><span class="nx">save</span> <span class="nx">gulp</span><span class="o">-</span><span class="nx">uglify</span></code></pre></figure>
+
+<p>Теперь напишем задачу для сборки:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">([</span>
+      <span class="s1">'app/js/app.js'</span><span class="p">,</span>
+      <span class="s1">'app/js/controllers/addUserCtrl.js'</span>
+    <span class="p">])</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">concat</span><span class="p">(</span><span class="s1">'main.js'</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">uglify</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">'dist/js/'</span><span class="p">));</span>
+<span class="p">});</span></code></pre></figure>
+
+
+<p>Выполняем...ошибка. В чем дело?!</p>
+
+<p>Потратив некоторое количество времени, решил спросить у Гугла. <br>
+Гугл быстро дал ответ и оказалось, что gulp-uglify просто не сообщили что такое ES6. 
+</p>
+
+
+<p>Хорошо, но что мне теперь делать? Все переписывать?</p>
+ 
+<p>Нет, необязательно. <br>
+Один из вариантов (другие, признаюсь, поленился искать) это установка babel и затем компиляция ES6 в ES5.</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">gulp</span><span class="o">-</span><span class="nx">babel</span> <span class="nx">babel</span><span class="o">-</span><span class="nx">preset</span><span class="o">-</span><span class="nx">es2015</span></code></pre></figure>
+
+<p>Обновляем наш код:</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">babel</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'gulp-babel'</span><span class="p">);</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">([</span>
+      <span class="s1">'app/js/app.js'</span><span class="p">,</span>
+      <span class="s1">'app/js/controllers/addUserCtrl.js'</span>
+    <span class="p">])</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">babel</span><span class="p">({</span><span class="na">presets</span><span class="p">:</span> <span class="p">[</span><span class="s1">'es2015'</span><span class="p">]}))</span> <span class="c1">// &lt;= добавили эту строку</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">concat</span><span class="p">(</span><span class="s1">'main.js'</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">uglify</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">'dist/js/'</span><span class="p">));</span>
+<span class="p">});</span></code></pre></figure>
+
+
+<p>Супер. Только я хотел чтобы браузер читал es6 код, а не es5. <br>
+Но и на том спасибо.</p>
+
+
+
+
+
+
+
+	</div>
+	
+	
+<!-- begin inner page navigation-->
+<div class="i-post-navigation"><a href="/articles" class="back">
+    <svg class="icon icon-arrow arrow--mod">
+      <use xlink:href="/assets/img/svg-sprite.svg#arrow"></use>
+    </svg><span>Все статьи</span></a>
+
+  <div class="nav-arrows">
+  	
+	  
+	  	<a href="/articles/javascript/2017/01/06/copy-array-and-object.html" title="prev"> 
+	      <svg class="icon icon-arrow-left arrow-left--mod">
+	        <use xlink:href="/assets/img/svg-sprite.svg#arrow-left"></use>
+	      </svg></a>
+	  
+    
+  </div>
+</div>
+<!-- end inner page navigation-->
+</article>
+
+
+				
+		</div>
+				
+
+
+		<script src="/assets/js/vendor.js"></script>
+		<script src="/assets/js/function.js"></script>
+
+	</body>
+</html>
