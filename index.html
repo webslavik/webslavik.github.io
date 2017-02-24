@@ -10,9 +10,16 @@
 		<!-- <title>Slava Sukhanov</title> -->
 		<title> Slava Sukhanov</title>
 
-
 		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto:400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
-		
+		<script src="/assets/js/observe.js"></script>
+		<script>
+			var roboto = new FontFaceObserver('Roboto');
+			var ptSerif = new FontFaceObserver('PT Serif');
+			var html = document.documentElement;
+			roboto.load();
+			ptSerif.load();
+		</script>
+
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 		<link rel="stylesheet" href="/assets/css/main.css"/>
@@ -22,14 +29,7 @@
 
 		<div class="page-wrap">
 
-			
-<!-- begin preloader-->
-<div class="preloader js-preloader">
-  <div class="spinner">
-    <div class="circle"></div>
-  </div>
-</div>
-<!-- end preloader-->
+
 			
 <!-- begin sidebar nav -->
 <nav class="p-navigation js-navigation">
@@ -71,8 +71,8 @@
     <div class="m-about-row m-about-row--m-bottom">
       <p class="m-about-name">Привет, меня зовут Славик.<br> Являюсь веб-разработчиком в направлении Front End.</p>
       <div class="m-about-text">
-        <p class="m-about-p">Занимаюсь тем, что  приносит удовольствие и добавляет нечто новое в мою жизнь. Мне нравиться веб-дизайн, нравиться писать код, создавать сайты и я готов посвящать  этому максимум своего времени.</p>
-        <p class="m-about-p">Веб не стоит на месте, и он подталкивает меня также совершенствоваться, изучать новые технологии, улучшать свои навыки и создавать более качественный продукт.</p>
+        <p class="m-about-p">Занимаюсь тем, что приносит удовольствие и добавляет нечто новое в жизнь.  Нравится веб-дизайн, нравится писать код, создавать сайты и готов посвящать этому максимум времени.</p>
+        <p class="m-about-p">Веб не стоит на месте, что подталкивает также совершенствоваться, изучать новые технологии, улучшать навыки и создавать качественный продукт.</p>
       </div>
     </div>
     <div class="m-about-btn-wrap"><a href="/about/" class="btn"><span class="text">Узнать Больше</span><span class="above"></span></a>

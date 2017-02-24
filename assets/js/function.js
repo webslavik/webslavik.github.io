@@ -1,1 +1,105 @@
-var myModule=function(){function s(){l.on("click",function(){$(this).toggleClass("is-active"),a.toggleClass("is-move"),t.toggleClass("is-move")}),a.on("click",function(){$(this).removeClass("is-move"),t.removeClass("is-move"),l.removeClass("is-active")})}function o(){var s=$(this).scrollTop();n.scroll(function(){var o=$(this).scrollTop();o>s?(s=o,a.hasClass("is-move")||l.addClass("is-hide")):o<s&&(s=o,l.removeClass("is-hide"))})}function i(){var s=$(".js-preloader");e.on("load",function(){s.fadeOut()})}var e=$(window),n=$(".page-wrap"),a=$(".js-content"),t=$(".js-navigation"),l=$(".js-hamburger"),r=function(){svg4everybody({}),s(),o(),i()};return{init:r}}();myModule.init();
+/*
+ ---------------------------------------------------------------
+    Библиотеки/плагины используемые в проекте:
+
+    - plugin
+
+ ---------------------------------------------------------------
+*/
+
+var myModule = (function() {
+
+	// кешируем элементы
+	var $window = $(window),
+			$pageWrap = $('.page-wrap'),
+			$content = $('.js-content'),
+			$navigation = $('.js-navigation'),
+			$hamburger = $('.js-hamburger');
+
+
+	// Инициализируем запуск всех необходимых фукций
+	var init = function() {
+
+
+		svg4everybody({}); 
+		//-----------------------
+		_showMenu();
+		_actionHamburger();
+		// _preloader();
+	};
+	//-------------------------------------------------------------------
+
+	// Show|Hide Menu
+  //-------------------------------------------------------------------
+	function _showMenu() {
+		$hamburger.on('click', function() {
+			$(this).toggleClass('is-active');
+			$content.toggleClass('is-move');
+			$navigation.toggleClass('is-move');
+		});
+
+		$content.on('click', function() {
+			$(this).removeClass('is-move');
+			$navigation.removeClass('is-move');
+			$hamburger.removeClass('is-active');
+		});
+
+		// $('.js-hamburger-section').on('mouseover', function() {
+		// 	if(!($content.hasClass('is-move')))
+		// 			$hamburger.addClass('is-hide');
+				
+		// 	// $hamburger.removeClass('is-hide');
+		// });
+
+		// $('.js-hamburger-section').on('mouseout', function() {
+		// 	$hamburger.addClass('is-hide');
+		// });
+	}
+  //-------------------------------------------------------------------
+
+  // Show|Hide Hamburger when scroll page
+  //-------------------------------------------------------------------
+	function _actionHamburger() {
+
+		var i = $(this).scrollTop();
+		$pageWrap.scroll(function() {
+
+			var wScroll = $(this).scrollTop();
+
+			if ( wScroll > i ) {
+				i = wScroll;
+
+				if(!($content.hasClass('is-move')))
+					$hamburger.addClass('is-hide');
+		
+			} else if ( wScroll < i ){
+				i = wScroll;
+				$hamburger.removeClass('is-hide');
+			}
+			
+		});
+		
+	}
+  //-------------------------------------------------------------------
+
+	// Preloader
+  //-------------------------------------------------------------------
+	function _preloader() {
+		var $preloader = $('.js-preloader');
+
+		$window.on('load', function() {
+			$preloader.fadeOut();
+		});
+		
+	}
+  //-------------------------------------------------------------------
+
+
+
+	return {
+		init: init
+	};
+
+})();
+
+myModule.init();

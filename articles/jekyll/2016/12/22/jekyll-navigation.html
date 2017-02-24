@@ -10,9 +10,16 @@
 		<!-- <title>Jekyll и навигация между постами</title> -->
 		<title> Jekyll и навигация между постами</title>
 
-
 		<link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto:400,500,700,900&amp;subset=cyrillic" rel="stylesheet">
-		
+		<script src="/assets/js/observe.js"></script>
+		<script>
+			var roboto = new FontFaceObserver('Roboto');
+			var ptSerif = new FontFaceObserver('PT Serif');
+			var html = document.documentElement;
+			roboto.load();
+			ptSerif.load();
+		</script>
+
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 		<link rel="stylesheet" href="/assets/css/main.css"/>
@@ -22,14 +29,7 @@
 
 		<div class="page-wrap">
 
-			
-<!-- begin preloader-->
-<div class="preloader js-preloader">
-  <div class="spinner">
-    <div class="circle"></div>
-  </div>
-</div>
-<!-- end preloader-->
+
 			
 <!-- begin sidebar nav -->
 <nav class="p-navigation js-navigation">
